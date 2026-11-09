@@ -6,8 +6,8 @@
 
 | Lớp | Định nghĩa của bạn | Ví dụ/điểm phân biệt |
 | --- | --- | --- |
-| `car` |Ô tô con dùng để chở người, thường từ 4-7 chỗ ngồi| Sedan, hatchback, SUV. Xe có thân cao vẫn là car nếu nhận ra dáng SUV|
-| `truck` |Xe tải lớn chở hàng, có thùng và đầu kéo tách biệt| Xe tải thùng, xe đầu kéo, pickup. Dấu hiệu dễ thấy là cabin và phần chở hàng tách biệt|
+| `car` |Ô tô con dùng để chở người, thường từ 4-7 chỗ ngồi| Car, Taxi, Sedan, Hatchback, SUV. Xe có thân cao vẫn là car nếu nhận ra dáng SUV|
+| `truck` |Xe tải lớn chở hàng, có thùng hoặc rơ-moóc| Xe tải thùng, xe đầu kéo, pickup. Dấu hiệu dễ thấy là cabin và phần chứa hàng tách biệt|
 | `bus` |Xe được thiết kế để chở nhiều hành khách, gồm xe buýt và xe khách| Xe buýt, xe khách, minibus có dáng xe khách rõ. Thường có thân dài, nhiều cửa sổ dọc hông hoặc cửa lên xuống lớn|
 | `van` |Xe có thân liền khối dạng hộp, dùng để chở hàng hoặc chở người| Xe van giao hàng, van chở khách. Van chở khách có thể có cửa sổ hai bên, nên xét cả dáng thân xe khi phân biệt với bus|
 
@@ -22,6 +22,6 @@
 
 | Ảnh | Tình huống | Quyết định cuối | Lý do theo schema |
 | --- | --- | --- | --- |
-| `drive_...` | | | |
-| `drive_...` | | | |
-| `drive_...` | | | |
+| `drive_002` |59 | không gán nhãn | ảnh mờ không nhìn rõ là 1 xe hay 2 xe liền nhau |
+| `drive_013` |67 | không gán nhãn | xe bị cắt ở rìa ảnh không phân biệt rõ lớp nào|
+| `drive_014` |69 | Gán nhãn van | Phân vân xe van hay truck|
