@@ -22,6 +22,6 @@
 
 | Ảnh | Tình huống | Quyết định cuối | Lý do theo schema |
 | --- | --- | --- | --- |
-| `drive_002` |59 | không gán nhãn | ảnh mờ không nhìn rõ là 1 xe hay 2 xe liền nhau |
-| `drive_013` |67 | không gán nhãn | xe bị cắt ở rìa ảnh không phân biệt rõ lớp nào|
-| `drive_014` |69 | Gán nhãn van | Phân vân xe van hay truck|
+| `drive_002` |Xe bạc sát mép phải | gán nhãn van | Chọn van dựa vào mui cao, thân dạng hộp và cửa sổ hông. Vẽ box đến mép ảnh, theo phần nhìn thấy. Gold gốc ghi ID 1, tương ứng với van khi đọc theo thứ tự lớp của gold. |
+| `drive_003` |Xe trắng dạng hộp được model gợi ý là truck | gán nhãn van | Chọn van dựa vào thân liền, mui cao và cửa sổ dọc hông|
+| `drive_005` |Xe trắng có cabin và phần khung sau tách biệt | Gán nhãn truck | Chọn truck dựa vào cấu trúc cabin và khung xe nhìn thấy. Box bao phần nhìn thấy của cùng chiếc xe|
