@@ -9,7 +9,7 @@
 - Link Colab đã chạy: https://colab.research.google.com/drive/1s4lLSRjFwINqf2KZGYqFspzvJNikV5Sb
 
 ## 2. Schema và mini guideline
-Schema bài làm gồm 0=car, 1=truck, 2=bus, 3=van. Mỗi xe hợp lệ có một box ôm sát phần nhìn thấy. Xe đỗ vẫn gán nhãn khi nhận diện được lớp.
+[Mini guideline](../../GUIDELINE_MINI.md). Schema bài làm gồm 0=car, 1=truck, 2=bus, 3=van. Mỗi xe hợp lệ có một box ôm sát phần nhìn thấy. Xe đỗ vẫn gán nhãn khi nhận diện được lớp.
 
 | Ảnh | Tình huống | Quyết định cuối | Lý do theo schema |
 | --- | --- | --- | --- |
@@ -38,12 +38,13 @@ Gold gốc và annotation bài làm dùng thứ tự ID khác nhau. Tôi quy đ�
 | F1 | 0.6929| 0.7908|
 | mean_iou_of_matches | 0.8473| 0.8527|
 | passed | false| false|
-
-·	drive_001: Bản rework có 5 box và cả 5 đều khớp. Bản trước có 15 box và cũng khớp 5. Dãy xe bên trái là điểm khác biệt cần làm rõ về phạm vi gán nhãn. ·	drive_002: Đối chiếu lại lớp của xe bạc sát mép phải. Bản rework giảm từ 44 xuống 15 box và khớp 11 trên 13 box gold. Kết quả tổng hợp chưa xác định nguyên nhân của từng box chưa khớp. ·	drive_009: Đối chiếu các box xe buýt và xe tải với ID gold. Bản rework có 21 box và khớp 14, giảm một cặp so với bản trước. Cần rà lại cặp bị mất sau chỉnh sửa. F1 tăng 0.0979 và mean IoU đạt ngưỡng 0.70. F1 vẫn dưới ngưỡng 0.80 nên CP5 chưa đạt. FP giảm 235, đồng thời FN tăng 24 sau rework.
+[Kết quả evaluator](../../outputs/annotation_evaluation.json)
+·	drive_001: Bản rework có 5 box và cả 5 đều khớp. Bản trước có 15 box và cũng khớp 5. Dãy xe bên trái là điểm khác biệt cần làm rõ về phạm vi gán nhãn. ·	drive_002: Đối chiếu lại lớp của xe bạc sát mép phải. Bản rework giảm từ 44 xuống 15 box và khớp 11 trên 13 box gold. Kết quả tổng hợp chưa xác định nguyên nhân của từng box chưa khớp. 
+·	drive_009: Đối chiếu các box xe buýt và xe tải với ID gold. Bản rework có 21 box và khớp 14, giảm một cặp so với bản trước. Cần rà lại cặp bị mất sau chỉnh sửa. 
+F1 tăng 0.0979 và mean IoU đạt ngưỡng 0.70. F1 vẫn dưới ngưỡng 0.80 nên CP5 chưa đạt. FP giảm 235, đồng thời FN tăng 24 sau rework.
 
 ## 5. Kết quả YOLO
-Notebook Colab đã chạy: https://colab.research.google.com/drive/1s4lLSRjFwINqf2KZGYqFspzvJNikV5Sb 
-YOLO26n đã hoàn thành huấn luyện, validation và dự đoán trên 10 ảnh eval.
+[Notebook Colab đã chạy:](https://colab.research.google.com/drive/1s4lLSRjFwINqf2KZGYqFspzvJNikV5Sb) YOLO26n đã hoàn thành huấn luyện, validation và dự đoán trên 10 ảnh eval.
 ·	Runtime và thiết bị: Google Colab, CPU. Checkpoint ghi phiên bản Ultralytics 8.4.208. Phiên bản Torch cần đối chiếu log runtime.
 ·	Cấu hình thực tế: 50 epoch, imgsz=640, batch=-1, device=cpu, dự đoán với conf=0.25.
 ·	Best checkpoint trong phiên chạy:/content/Day2-Lab/outputs/yolo26_runs/vehicle_annotation/weights/best.pt
@@ -56,8 +57,10 @@ YOLO26n đã hoàn thành huấn luyện, validation và dự đoán trên 10 �
 | mAP50 | 0.2806|
 | mAP50–95 | 0.2068|
 
-Kết quả đính kèm gồm ảnh dự đoán /assets/eval_predictions/visuals/ và kết quả chạy YOLO26 /assets/yolo26_runs/. Trên assets/eval_predictions/visuals/drive_051.jpg, box quanh chiếc xe đỏ ở tiền cảnh bao khá sát phần xe nhìn thấy. Model dự đoán van với confidence 0.95, trong khi thân thấp và đuôi có dáng xe con. Đây là một ca nghi nhầm car thành van cần đối chiếu với nhãn eval.
-1.	Lớp recall thấp nhất: Ma trận nhầm lẫn chuẩn hóa assets/yolo26_runs/vehicle_eval/confusion_matrix_normalized.png cho thấy bus và van cùng có tỷ lệ nhận đúng bằng 0 tại thiết lập của ma trận. Đây là tỷ lệ đọc từ ma trận. Cần đối chiếu bảng validation theo lớp để ghi recall chính xác và ghép một box gold với prediction tương ứng để xác nhận ảnh minh họa.
+Kết quả đính kèm gồm [ảnh dự đoán trên 10 ảnh eval](assets/eval_predictions/visuals/) và [log train cùng biểu đồ YOLO26](assets/yolo26_runs/).
+
+Trên [ảnh drive_051.jpg](assets/eval_predictions/visuals/drive_051.jpg), box quanh chiếc xe đỏ ở tiền cảnh bao khá sát phần xe nhìn thấy. Model dự đoán `van` với confidence 0.95, trong khi thân thấp và đuôi có dáng xe con. Đây là một ca nghi nhầm `car` thành `van` cần đối chiếu với nhãn eval.
+1.	Lớp recall thấp nhất: [Ma trận nhầm lẫn chuẩn hóa](assets/yolo26_runs/vehicle_eval/confusion_matrix_normalized.png) cho thấy bus và van cùng có tỷ lệ nhận đúng bằng 0 tại thiết lập của ma trận. Đây là tỷ lệ đọc từ ma trận. Cần đối chiếu bảng validation theo lớp để ghi recall chính xác và ghép một box gold với prediction tương ứng để xác nhận ảnh minh họa.
 2.	mAP50 cao hơn mAP50–95: Kiểm tra độ sát của các cạnh box, nhất là ở xe bị che hoặc cắt khung. Một box có thể khớp tại IoU 0.50 nhưng không khớp tại các ngưỡng cao hơn.
 3.	Lỗi lớp có thể liên quan guideline hoặc schema: Ma trận cho thấy 0.92 ở ô nhãn tham chiếu van, dự đoán bus. Cần kiểm tra thứ tự ID trong nhãn eval và đối chiếu ảnh với quy tắc phân biệt van/minivan và bus. Tỷ lệ này chưa xác định được nguyên nhân.
 4.	Vai trò của 10 ảnh eval: Tập này được giữ ngoài train để validation và chọn checkpoint tốt nhất. Vì đã dùng để chọn checkpoint, kết quả trên tập này là kết quả validation.
