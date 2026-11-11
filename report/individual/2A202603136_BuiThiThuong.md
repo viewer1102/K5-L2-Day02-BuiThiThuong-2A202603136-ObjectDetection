@@ -38,17 +38,19 @@ Gold gốc và annotation bài làm dùng thứ tự ID khác nhau. Tôi quy đ�
 | F1 | 0.6929| 0.7908|
 | mean_iou_of_matches | 0.8473| 0.8527|
 | passed | false| false|
-[Kết quả evaluator](../../outputs/annotation_evaluation.json)
-·	drive_001: Bản rework có 5 box và cả 5 đều khớp. Bản trước có 15 box và cũng khớp 5. Dãy xe bên trái là điểm khác biệt cần làm rõ về phạm vi gán nhãn. ·	drive_002: Đối chiếu lại lớp của xe bạc sát mép phải. Bản rework giảm từ 44 xuống 15 box và khớp 11 trên 13 box gold. Kết quả tổng hợp chưa xác định nguyên nhân của từng box chưa khớp. 
-·	drive_009: Đối chiếu các box xe buýt và xe tải với ID gold. Bản rework có 21 box và khớp 14, giảm một cặp so với bản trước. Cần rà lại cặp bị mất sau chỉnh sửa. 
-F1 tăng 0.0979 và mean IoU đạt ngưỡng 0.70. F1 vẫn dưới ngưỡng 0.80 nên CP5 chưa đạt. FP giảm 235, đồng thời FN tăng 24 sau rework.
+
+[Kết quả evaluator](../../outputs/annotation_evaluation.json) 
+- drive_001: Bản rework có 5 box và cả 5 đều khớp. Bản trước có 15 box và cũng khớp 5. Dãy xe bên trái là điểm khác biệt cần làm rõ về phạm vi gán nhãn.
+- drive_002: Đối chiếu lại lớp của xe bạc sát mép phải. Bản rework giảm từ 44 xuống 15 box và khớp 11 trên 13 box gold. Kết quả tổng hợp chưa xác định nguyên nhân của từng box chưa khớp.
+- drive_009: Đối chiếu các box xe buýt và xe tải với ID gold. Bản rework có 21 box và khớp 14, giảm một cặp so với bản trước. Cần rà lại cặp bị mất sau chỉnh sửa.
+
+F1 tăng 0.0979 và mean IoU đạt ngưỡng 0.70. F1 vẫn dưới ngưỡng 0.80 nên CP5 chưa đạt. FP giảm 
 
 ## 5. Kết quả YOLO
 [Notebook Colab đã chạy:](https://colab.research.google.com/drive/1s4lLSRjFwINqf2KZGYqFspzvJNikV5Sb) YOLO26n đã hoàn thành huấn luyện, validation và dự đoán trên 10 ảnh eval.
-·	Runtime và thiết bị: Google Colab, CPU. Checkpoint ghi phiên bản Ultralytics 8.4.208. Phiên bản Torch cần đối chiếu log runtime.
-·	Cấu hình thực tế: 50 epoch, imgsz=640, batch=-1, device=cpu, dự đoán với conf=0.25.
-·	Best checkpoint trong phiên chạy:/content/Day2-Lab/outputs/yolo26_runs/vehicle_annotation/weights/best.pt
-
+- Runtime và thiết bị: Google Colab, CPU. Checkpoint ghi phiên bản Ultralytics 8.4.208. Phiên bản Torch cần đối chiếu log runtime.
+- Cấu hình thực tế: 50 epoch, imgsz=640, batch=-1, device=cpu, dự đoán với conf=0.25.
+- Best checkpoint trong phiên chạy:/content/Day2-Lab/outputs/yolo26_runs/vehicle_annotation/weights/best.pt
 
 | Chỉ số trên 10 ảnh eval | Giá trị |
 |---|---:|
@@ -70,9 +72,7 @@ Trên [ảnh drive_051.jpg](assets/eval_predictions/visuals/drive_051.jpg), box 
 
 | Bước/thời điểm | Lỗi quan sát | Cách đã thử | Kết quả/còn thiếu |
 |---|---|---|---|
-| CVAT | Box nháp có xe bị bỏ sót, box trùng và nhãn sai lớp
-Thứ tự ID lớp của gold khác schema bài làm| Rà ảnh trong CVAT và dùng script IoU để khoanh cặp box nghi trùng
-Quy đổi ID trên bản sao annotation rồi chấm với gold gốc| Đã rework và push bản v2|
+| CVAT | Box nháp có xe bị bỏ sót, box trùng và nhãn sai lớp. Thứ tự ID lớp của gold khác schema bài làm| Rà ảnh trong CVAT và dùng script IoU để khoanh cặp box nghi trùng| Quy đổi ID trên bản sao annotation rồi chấm với gold gốc| Đã rework và push bản v2|
 | Gold QC | Thứ tự ID lớp của gold khác schema bài làm| Quy đổi ID trên bản sao annotation rồi chấm với gold gốc| F1 sau rework 0.7908, còn thiếu 0.0092|
 | Colab | Phiên chạy dùng CPU hơi lâu| Đã hoàn thành huấn luyện, validation và xuất ảnh dự đoán| Đã có metric, checkpoint và ảnh prediction|
 
@@ -81,8 +81,6 @@ Quy đổi ID trên bản sao annotation rồi chấm với gold gốc| Đã rew
 Đối chiếu [RUBRIC.md](../../RUBRIC.md): tôi đã có mini guideline, bộ 50 file nhãn train, kết quả checker của bản ban đầu, commit khóa nhãn và số liệu Gold QC trước/sau rework. Phần danh sách ảnh self-QC cần bổ sung đủ 10 tên ảnh đã rà. CP5 chưa đạt ngưỡng F1. Notebook CP6 đã chạy xong và có metric, checkpoint và ảnh prediction. Cần đối chiếu log Torch và bảng recall theo lớp để hoàn thiện mục 5.
 
 ## 8. Công cụ AI và tài liệu tham khảo
-
-·	YOLO26n (Ultralytics): Tạo box nháp cho 46 ảnh. Tôi rà và sửa box, lớp và các xe bị bỏ sót trong CVAT.
-·	ChatGPT: Hỗ trợ viết script tạo nhãn nháp, dò box nghi trùng, quy đổi ID trên bản sao phục vụ Gold QC và soạn báo cáo. Tôi tự kiểm tra nhãn trên ảnh, chạy checker và evaluator.
-·	Tài liệu tham khảo:GUIDE.md, CVAT Ultralytics YOLO, Ultralytics YOLO26.
-
+- YOLO26n (Ultralytics): Tạo box nháp cho 46 ảnh. Tôi rà và sửa box, lớp và các xe bị bỏ sót trong CVAT.
+- ChatGPT: Hỗ trợ viết script tạo nhãn nháp, dò box nghi trùng, quy đổi ID trên bản sao phục vụ Gold QC và soạn báo cáo. Tôi tự kiểm tra nhãn trên ảnh, chạy checker và evaluator.
+- Tài liệu tham khảo: [GUIDE.md](../../GUIDE.md), [CVAT Ultralytics YOLO](https://docs.cvat.ai/docs/dataset_management/formats/format-yolo-ultralytics/), [Ultralytics YOLO26](https://docs.ultralytics.com/models/yolo26)
